@@ -1,8 +1,8 @@
-#本版本更新包含以下内容：
+# 本版本更新包含以下内容：
 
-##语音识别(asr) 版本：2019-06-14
+## 语音识别(asr) 版本：2019-06-14
 
-## 第 7 次发布
+### 第 7 次发布
 
 发布时间：2020-03-19 08:03:01
 
@@ -37,7 +37,7 @@
 
 * [CostDetail](https://cloud.tencent.com/document/api/555/19183#CostDetail)
 
-	* **<font color="#dd0000">修改成员：</font>**ComponentSet
+	* <font color="#dd0000">**修改成员：**</font>ComponentSet
 
 
 
