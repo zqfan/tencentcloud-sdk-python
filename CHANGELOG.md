@@ -37,7 +37,7 @@
 
 * [CostDetail](https://cloud.tencent.com/document/api/555/19183#CostDetail)
 
-	* <font color="#dd0000">**修改成员：**</font>ComponentSet
+	* <font color="#dd0000">修改成员：</font>ComponentSet
 
 
 
