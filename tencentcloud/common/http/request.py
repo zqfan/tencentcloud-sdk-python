@@ -41,9 +41,35 @@ class ProxyHTTPSConnection(HTTPSConnection):
         HTTPSConnection.request(self, method, url, body, headers)
 
 
+class ProxyHTTPConnection(HTTPConnection):
+    def __init__(self, host, port=None, timeout=60):
+        self.request_length = 0
+        self.has_proxy = False
+        self.request_host = host
+        http_proxy = (os.environ.get('http_proxy')
+                       or os.environ.get('HTTP_PROXY'))
+        if http_proxy:
+            url = urlparse(http_proxy)
+            if not url.hostname:
+                url = urlparse('http://' + https_proxy)
+            host = url.hostname
+            port = url.port
+            self.has_proxy = True
+        HTTPConnection.__init__(self, host, port, timeout=timeout)
+
+    def request(self, method, url, body=None, headers={}):
+        if self.has_proxy:
+            self.set_tunnel(self.request_host, 80)
+        headers.setdefault("Host", self.request_host)
+        HTTPConnection.request(self, method, url, body, headers)
+
+
 class ApiRequest(object):
-    def __init__(self, host, req_timeout=60, debug=False):
-        self.conn = ProxyHTTPSConnection(host, timeout=req_timeout)
+    def __init__(self, host, req_timeout=60, debug=False, is_http=False):
+        if is_http:
+            self.conn = ProxyHTTPConnection(host, timeout=req_timeout)
+        else:
+            self.conn = ProxyHTTPSConnection(host, timeout=req_timeout)
         self.req_timeout = req_timeout
         self.keep_alive = False
         self.debug = debug
